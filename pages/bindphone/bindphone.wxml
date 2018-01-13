@@ -1,0 +1,26 @@
+<view>
+  <view class='title'>绑定手机号</view>
+  <view class="section">
+    <!-- <input maxlength='11' type="number" placeholder='请输入手机号' readonlyunselectable="on" bindinput="bindHideKeyboard"/> -->
+    <input class="phonecode" placeholder="手机号码" bindinput="phoneinput" type="number" bindinput="phoneinput" maxlength="11" />
+  </view>
+  <view class="section">
+    <!-- <input type="number" placeholder='请输入验证码' maxlength="6"/> -->
+    <input type="number"  placeholder="验证码" bindinput="codeinput" maxlength="6" />
+    <button bindtap="changeCode" disabled="{{codeDis}}" class="code_box {{swichNav==1 ? 'getcode_btn' : ''}}">
+      <text hidden="{{flag != true}}">重新</text>{{phoneCode}}<text hidden="{{phoneCode == '获取验证码'}}">S</text>
+    </button>
+    <!-- <view class="code_box {{swichNav==1 ? 'getcode_btn' : ''}}">获取验证码</view> -->
+  </view>
+  <view class="getPhone_btn {{swichNav1==1 ? 'setPhone_btn' : ''}}" bindtap='getPhoneNumber'>确定</view>  
+</view>
+
+<!-- <view class="login-top">
+  
+  <view class="login-top1">
+    <input type="number"  placeholder="验证码" bindinput="codeinput" maxlength="6" />
+    <button bindtap="changeCode" disabled="{{codeDis}}">
+      <text hidden="{{flag != true}}">重新</text>{{phoneCode}}<text hidden="{{phoneCode == '获取验证码'}}">S</text>
+    </button>
+  </view>
+</view> -->

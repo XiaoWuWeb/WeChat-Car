@@ -1,0 +1,27 @@
+<view class='wrap'>
+  <view class='line-box'>
+    <view class='line-one'></view>
+    <text class='line-text'>车位编号</text>
+    <view class='line-two'></view>
+  </view>
+  <view class='carNum-box'>
+    <view class='carNum'>{{carNum}}</view>
+    <!-- <view class='prompt_box clearfix'>
+      <image class='prompt_ico' src='../../img/problem_icon@3x.png'></image>
+      <span class='prompt_info'>定位不准？ 手动输入编号</span>
+    </view> -->
+  </view>
+
+  <view class='info-box'>
+    <view class='address'>{{address}}</view>
+    <view class='plate clearfix' bindtap='plateInfo'>车牌号：<span>{{plate}}</span></view>
+    <view class='time clearfix'>停车时长：<span>小时</span><input class='time_input' type="number" bindinput="timeInput"/></view>
+    <!-- <view class='ticket'>可用券：<span>{{ticket}}</span></view> -->
+    <view class='money clearfix border-none'>停车费：<span>约：￥{{money}}</span></view>
+  </view>
+</view>
+
+<view class='footer clearfix'>
+  <view class='money_all'>合计：￥{{moneyAll}}</view>
+  <view class="pay_btn" bindtap='payMoney'>立即付款</view>
+</view>

@@ -1,0 +1,64 @@
+<view class='container'>
+  <view class="swiper-tab">
+    <view class="swiper-tab-list {{swichNav==1 ? 'on' : ''}}" data-current="0" bindtap="swichNav">停车</view>
+     <!-- <view class="swiper-tab-list {{swichNav1==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav1">充电</view>  -->
+  </view>
+
+  <view class="swiper-box" duration="300" style="height:{{winHeight - 44}}px">
+    <!-- 停车 -->
+    <view class="{{swichNav?'show':'hidden'}}">
+      <view class="map_container">
+        <map id="map" scale="12" longitude="{{longitude}}" latitude="{{latitude}}" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindtap="click" bindmarkertap="markertap" bindcallouttap="callouttap" show-location style="width: 100%;height:{{winHeight - 44}}px">
+        <!--../../img/parking-s_icon_choice_default@2x.png  -->
+          <!-- <cover-view class='parking-s' bindtap="parkingS">
+            <cover-image src="{{lockImg}}"></cover-image>
+            <cover-view>车位锁</cover-view>
+          </cover-view> -->
+          <!--../../img/parking-p_icon_choice_default@2x.png  -->
+          <!-- <cover-view class='parking-p' bindtap="parkingP">
+            <cover-image src="{{carImg}}"></cover-image>
+            <cover-view>智慧车位</cover-view>
+          </cover-view> -->
+          <cover-image class="refresh_ico {{parkShow?'hidden':'show'}}" bindtap="refreshtap" src="../../img/refresh_ico.png"></cover-image>
+          <cover-image class="center_ico {{parkShow?'hidden':'show'}}" bindtap="moveToLocation" src="../../img/center_ico.png"></cover-image>
+          <cover-image class="help_ico {{parkShow?'hidden':'show'}}" bindtap="helpTocenter" src="../../img/help_ico.png"></cover-image>
+          <cover-image class="personal_ico {{parkShow?'hidden':'show'}}" bindtap="personalTocenter" src="../../img/personal_ico.png"></cover-image>
+          <cover-view class="parking-btn {{parkShow?'hidden':'show'}}" bindtap="stopCar">我要停车</cover-view>
+          <cover-view class="{{parkShow?'show':'hidden'}} user_box">
+            <!-- <cover-view class="user_imgbox">
+              <cover-image class="user_img" src='{{userInfo.avatarUrl}}'></cover-image>
+            </cover-view> -->
+            <cover-view class="park_box">
+              <!-- <cover-view class='user_name'>{{userInfo.nickName}}</cover-view> -->
+              <cover-view class='park_list clearfix'>
+                <cover-view class='park_info'>
+                  <cover-view class='park_cont'>{{payTime}}小时</cover-view>
+                  <cover-view class='park_title'>购买时长</cover-view>
+                </cover-view>
+                <cover-view class='park_info'>
+                  <cover-view class='park_cont'>{{parkTime}}分钟</cover-view>
+                  <cover-view class='park_title'>停车时间</cover-view>
+                </cover-view>
+                <cover-view class='park_info'>
+                  <cover-view class='park_cont'>{{parkNo}}</cover-view>
+                  <cover-view class='park_title'> 车位编号</cover-view>
+                </cover-view>
+              </cover-view>
+              <cover-view class='consu_box'>
+                <cover-view class='duration_btn' bindtap='payPark'>购买时长</cover-view>
+                <cover-view class='consu_btn' bindtap='stopPark'>已消费{{consumedMoney}}元...</cover-view>
+              </cover-view>
+            </cover-view>
+          </cover-view>
+          
+        </map>
+      </view>
+    </view>
+    
+    <!-- 充电 -->
+    <!-- <view class="{{swichNav1?'show':'hidden'}}">
+      <view style="height:{{winHeight - 44}}px">我是充电</view>
+    </view>  -->
+
+  </view>
+</view>

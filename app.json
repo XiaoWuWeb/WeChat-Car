@@ -1,0 +1,20 @@
+{
+  "pages":[
+    
+    "pages/index/index",
+    "pages/person/person",
+    "pages/carNumber/carNumber",
+    "pages/help/help",
+    "pages/bindphone/bindphone",
+    "pages/plate/plate",
+    "pages/paytime/paytime",
+    "pages/order/order",
+    "pages/endbilling/endbilling",
+    "pages/plate1/plate1"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTextStyle":"black"
+  }
+}

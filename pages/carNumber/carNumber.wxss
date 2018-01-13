@@ -1,0 +1,99 @@
+.pas-box {
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  padding-top: 16px;
+}
+
+.box-six {
+  display: block;
+  height: 42px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.six {
+  height: 42px;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+  width: 312px;
+}
+
+.i {
+  display: block;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  text-align: center;
+  line-height: 40px;
+  border: 1rpx rgb(34, 34, 34) solid;
+  border-radius: 8px;
+  margin-right: 10px;
+  float: left;
+}
+
+/* .i.active {
+   background: url(http://192.168.0.107:8081/img/blink.gif) no-repeat center center;
+   } */
+
+.b {
+  display: block;
+  height: 40px;
+}
+
+.pas-input {
+  border: 0;
+  font-size: 10px;
+  height: 40px;
+  left: -80px;
+  margin: 0;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 110%;
+  z-index: 8;
+  color:transparent;
+}
+
+.line-box{
+  width: 267px;
+  margin: 20px auto;
+  text-align: center
+}
+.line-text{
+  font-size: 12px;
+  color: #909090;
+  /* margin: 0 12px;
+  float: left; */
+}
+.line-one{
+  display: block;
+  width: 88px;
+  border: 1rpx #f8f8f8 solid;
+  float: left;
+  margin-top: 13px;
+}
+.line-two{
+  display: block;
+  width: 88px;
+  border: 1rpx #f8f8f8 solid;
+  float: right;
+  margin-top: 13px;
+}
+
+.confirm_btn{
+  width: 305px;
+  height: 35px;
+  font-size: 18px;
+  color: #fff;
+  text-align: center;
+  line-height: 35px;
+  background-color: rgb(192, 192, 192);
+  border-radius: 4px;
+  margin: 47px auto 0;
+}
+
+.on{
+  background-color: #32b51c;
+}

@@ -1,0 +1,224 @@
+/**index.wxss**/
+.container{
+  padding: 0;
+}
+.swiper-tab{
+    width: 100%;
+    height: 44px;
+    /* border-bottom: 2rpx solid #777777; */
+    text-align: center;
+    line-height: 40px;
+    background-color: rgb(255,255,255);
+    }
+.swiper-tab-list{
+    font-size: 16px;
+    display: inline-block;
+    width: 33.33%;
+    color: rgb(144,144,144);
+}  
+.on{
+    color: rgb(50,181,28);
+    border-bottom: 2px solid rgb(50,181,28);
+}
+
+.show{
+  display:block;
+}
+.hidden{
+  display:none;
+}
+
+.swiper-box{
+    position: relative;
+    display: block;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.swiper-box view{
+    text-align: center;
+}
+
+.map_container{
+  height: 100%;
+}
+
+#map{
+  position: relative;
+}
+
+.parking-btn{
+  position: fixed;
+  bottom: 31px;
+  left: 50%;
+  z-index: 99;
+  margin-left: -90px;
+  width: 180px;
+  height: 44px;
+  font-size: 18px;
+  line-height: 44px;
+  color: rgb(255,255,255);
+  background-color: rgb(50,181,29);
+  border-radius: 8px;
+}
+
+/*切换停车与锁  */
+ .parking-s{
+  position: fixed;
+   top: 73px; 
+  /* top: 93px; */
+  right: 14px;
+  width: 86px;
+  height: 86px;
+  font-size: 12px;
+  color: rgb(48,48,48);
+  text-align: center;
+  background-color: rgb(255,255,255);
+}
+
+.parking-s cover-image{
+  width: 56px;
+  height: 61px;
+  margin: 0 auto;
+}
+
+.parking-p{
+  position: fixed;
+  top: 73px;
+  /* top: 174px; */
+  right: 14px;
+  width: 86px;
+  height: 86px;
+  font-size: 12px;
+  color: rgb(48,48,48);
+  text-align: center;
+  background-color: rgb(255,255,255);
+}
+.parking-p cover-image{
+  width: 56px;
+  height: 61px;
+  margin: 0 auto;
+} 
+
+.refresh_ico,.center_ico,.help_ico,.personal_ico{
+  width: 49px;
+  height: 49px;
+}
+
+.refresh_ico{
+  position: fixed;
+  left: 14px;
+  bottom: 61px;
+}
+
+.center_ico{
+  position: fixed;
+  left: 14px;
+  bottom: 12px;
+}
+
+.help_ico{
+  position: fixed;
+  right: 14px;
+  bottom: 61px;
+}
+
+.personal_ico{
+  position: fixed;
+  right: 14px;
+  bottom: 12px;
+}
+
+.user_box{
+  width: 100%;
+  height: 180px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+}
+
+.user_imgbox{
+  position: fixed;
+  bottom: 160px;
+  left: 50%;
+  margin-left: -25px;
+  /* border-radius: 50%; */
+  -moz-border-radius: 25px; /* Firefox */
+  -webkit-border-radius: 25px; /* Safari 和 Chrome */
+  border-radius: 25px; /* Opera 10.5+, 以及使用了IE-CSS3的IE浏览器 */
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.user_img{
+  width: 50px;
+  height: 50px;
+  /* background: url({{userInfo.nickName}}) no-repeat; */
+  /* border-radius: 50%;  */
+  -moz-border-radius: 25px; /* Firefox */
+  -webkit-border-radius: 25px; /* Safari 和 Chrome */
+  border-radius: 25px; /* Opera 10.5+, 以及使用了IE-CSS3的IE浏览器 */
+}
+.park_box{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 165px;
+  text-align: center;
+  background-color: #fff;
+  /* padding-top: 25px; */
+  z-index: 8888;
+}
+.user_name{
+  font-size: 15px;
+  color: #606060;
+  margin: 30px 0 18px;
+}
+.park_info{
+  margin-top: 30px;
+  width: 33.3%;
+  float: left;
+}
+.park_cont{
+  font-size: 18px;
+  color: #32b51c;
+  margin-bottom: 5px;
+}
+.park_title{
+  font-size: 12px;
+  color: #606060;
+  margin-bottom: 20px;
+}
+
+.consu_box{
+  width: 100%;
+  height: 35px;
+  padding: 0 33px;
+}
+
+.duration_btn{
+  width: 140px;
+  height: 35px;
+  font-size: 18px;
+  color: #fff;
+  text-align: center;
+  line-height: 35px;
+  background-color: #909090;
+  border-radius: 5px;
+  float: left;
+}
+
+.consu_btn{
+  width: 140px;
+  height: 35px;
+  font-size: 18px;
+  color: #fff;
+  text-align: center;
+  line-height: 35px;
+  background-color: #32b51c;
+  border-radius: 5px;
+  margin-left: 30px;
+  float: left;
+}

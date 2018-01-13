@@ -1,0 +1,77 @@
+.line-box{
+  width: 267px;
+  margin: 20px auto;
+  text-align: center
+}
+.line-text{
+  font-size: 12px;
+  color: #909090;
+  /* margin: 0 12px;
+  float: left; */
+}
+.line-one{
+  display: block;
+  width: 88px;
+  border: 1rpx #f8f8f8 solid;
+  float: left;
+  margin-top: 13px;
+}
+.line-two{
+  display: block;
+  width: 88px;
+  border: 1rpx #f8f8f8 solid;
+  float: right;
+  margin-top: 13px;
+}
+
+.park_info{
+  margin-top: 30px;
+  width: 33.3%;
+  float: left;
+}
+.park_cont{
+  font-size: 18px;
+  color: #32b51c;
+  text-align: center;
+  margin-bottom: 5px;
+}
+.park_title{
+  font-size: 12px;
+  color: #606060;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.money{
+  font-size: 36px;
+  color: #222;
+  font-weight: bold;
+  text-align: center;
+  line-height: 50px;
+}
+
+.money_all{
+  font-size: 12px;
+  color: #909090;
+  margin: 12px 0 20px 53px;
+}
+.share_btn{
+  width: 305px;
+  height: 40px;
+  font-size: 18px;
+  color: #fff;
+  text-align: center;
+  line-height: 40px;
+  background-color: rgb(50, 181, 28);
+  border-radius: 4px;
+  margin: 50px auto 18px;
+  letter-spacing: 2px;
+}
+.money_info{
+  font-size: 12px;
+  color: #909090;
+  margin-left: 55px;
+}
+.money_remain{
+  color: rgb(50, 181, 28);
+}

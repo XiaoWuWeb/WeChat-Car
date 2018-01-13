@@ -1,0 +1,85 @@
+.header{
+  position: relative;
+  width: 100%;
+  height: 122px;
+  font-size: 18px;
+  color: #222;
+  background-color: #f8f8f8;
+}
+.user_img{
+  width: 66px;
+  height: 66px;
+  margin: 28px 15px 0 32px;
+  border-radius: 50%;
+  float: left;
+}
+.user_info{
+  float: left;
+}
+.user_name{
+  line-height: 30px;
+  margin: 28px 0 6px 0;
+}
+.user_no{
+  font-size: 16px;
+}
+.arrow{
+  position: absolute;
+  top: 52px;
+  right: 28px;
+  width: 11px;
+  height: 17px;
+}
+.on{
+  font-size: 18px;
+  color: #32b51c;
+}
+.balance_box{
+  padding: 40px 20px 26px;
+  border-bottom: 1px rgb(227, 227, 227) solid;
+}
+
+.balance{
+  font-size: 15px;
+  color: #222;
+  margin-bottom: 8px;
+}
+.balance_num{
+  font-size: 24px;
+  color: #222;
+}
+
+.top-up{
+  width: 60px;
+  height: 30px;
+  font-size: 15px;
+  color: #fff;
+  line-height: 30px;
+  text-align: center;
+  background-color: #32b51c;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.coupons_box,.parking_box,.recharge_box,.refunds_box,.inform_box{
+  width: 100%;
+  height: 60px;
+  font-size: 16px;
+  color: #222;
+  line-height: 60px;
+  border-bottom: 1px rgb(227, 227, 227) solid;
+}
+.arrow1{
+  width: 11px;
+  height: 17px;
+  float: right;
+  margin: 22px 20px 0 0;
+}
+.person-title{
+  margin-left: 20px;
+}
+.info{
+  font-size: 15px;
+  color: #909090;
+  margin-right: 15px;
+}

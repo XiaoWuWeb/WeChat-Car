@@ -1,0 +1,32 @@
+<view class='line-box'>
+  <view class='line-one'></view>
+  <text class='line-text'>车位编号</text>
+  <view class='line-two'></view>
+</view>
+
+<view class="pas-box">
+  <view class="box-six">
+    <input class="pas-input" type="number" maxlength="6" focus="false" readonlyunselectable="on" bindinput="bindHideKeyboard"></input>
+    <view class="six">
+      <text class="i {{len==0?'active':''}}">
+        <text class="b" wx:if="{{len>0}}">{{oneNum}}</text>
+      </text>
+      <text class="i {{len==1?'{{}}':''}}">
+        <text class="b" wx:if="{{len>1}}">{{twoNum}}</text>
+      </text>
+      <text class="i {{len==2?'active':''}}">
+        <text class="b" wx:if="{{len>2}}">{{threeNum}}</text>
+      </text>
+      <text class="i {{len==3?'active':''}}">
+        <text class="b" wx:if="{{len>3}}">{{fourNum}}</text>
+      </text>
+      <text class="i {{len==4?'active':''}}">
+        <text class="b" wx:if="{{len>4}}">{{fiveNum}}</text>
+      </text>
+      <text class="i {{len==5?'active':''}}">
+        <text class="b" wx:if="{{len>5}}">{{sixNum}}</text>
+      </text>
+    </view>
+  </view>
+  <view class="confirm_btn {{len==6 ? 'on' : ''}}" bindtap='confirmTobtn'>确认</view>
+</view>
