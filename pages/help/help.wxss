@@ -1,0 +1,17 @@
+.img-box{
+  margin-top: 50px;
+  font-size: 14px;
+  color: #999;
+  text-align: center;
+}
+
+.img-box > image {
+  display: block;
+  width: 206px;
+  height: 169px;
+  margin: 0 auto;
+}
+
+.img-box > text {
+  margin-top: 10px;
+}

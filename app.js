@@ -6,7 +6,12 @@ App({
     token:'',
     oAddress :''
   },
-  
+  onShareAppMessage: function () {
+    return {
+      title: '华腾智能停车',
+      path: '/pages/index/index',
+    }
+  },
   onLaunch: function (){
     var that = this;
     wx.getLocation({
@@ -18,8 +23,7 @@ App({
         var demo = new QQMapWX({
           key: 'XKBBZ-5RKWS-4TQOB-6CMPO-U2ORF-V5BKW' // 必填
         });
-        console.log(longitude);
-        console.log(latitude);
+
         demo.reverseGeocoder({
           location: {
             latitude: latitude,
@@ -27,9 +31,9 @@ App({
           },
           success: function (res) {
             // 获取当前区域
-            // console.log(res.result.address_component.district);
+
             var oAddress = res.result.address_component.district;
-            // console.log(oAddress);
+
             wx.setStorage({
               key: 'oAddress',
               data: oAddress
@@ -40,7 +44,7 @@ App({
                 wx.showLoading({
                   title: '登录中...'
                 });
-                // console.log(res);
+
                 wx.request({
                   url: http.reqUrl + '/wx/xiaoLogin',
                   data: {
@@ -53,23 +57,26 @@ App({
                   },
                   success: function (res) {
                     wx.hideLoading();
-                    // setTimeout(function () {
-                      
-                    // }, 2000)
-                    console.log('login成功');
-                    // console.log(res);
+
                     wx.setStorage({
                       key: 'token',
-                      data: res.data.data,
+                      data: res.data.data.token,
                       complete: function () {
-                        console.log('login:true');
+                        console.log('complete');
+                      }
+                    });
+                    wx.setStorage({
+                      key: 'userID',
+                      data: res.data.data.userId,
+                      complete: function () {
+                        console.log('complete');
                       }
                     });
                   },
                   fail: function (res) {
                     wx.hideLoading();
                     console.log('login出错');
-                    // console.log(res);
+
                     wx.showModal({
                       title: '提示',
                       content: '微信登录出错，请重新进入小程序或清除下缓存！',
@@ -83,14 +90,7 @@ App({
                   }
                 });
               }
-            })
-            
-          },
-          fail: function (res) {
-            console.log(res);
-          },
-          complete: function (res) {
-            console.log(res);
+            });
           }
         });
       }
@@ -110,7 +110,7 @@ App({
   },
   getUserInfo: function (cb) {
     var that = this;
-    console.log("getUserInfo.js 1");
+
     if (this.globalData.userInfo) {
       // 用户信息
       if (!this.globalData.userInfo.ofoInfo) {
@@ -122,7 +122,7 @@ App({
       return;
     }
 
-    console.log("getUserInfo.js 2");
+
     var userInfo2 = wx.getStorageSync("userInfo");
     if (userInfo2 && typeof userInfo2 == 'object') {
       this.globalData.userInfo = userInfo2
@@ -132,16 +132,16 @@ App({
     }
 
 
-    console.log("getUserInfo.js 3");
+
     //调用登录接口
     wx.login({
       success: function () {
         wx.getUserInfo({
           success: function (res) {
-            console.log("getUserInfo.js 4");
+
             that.globalData.userInfo = res.userInfo
             typeof cb == "function" && cb(that.globalData.userInfo)
-            console.log(res);
+
             wx.setStorage({
               key: 'userInfo',
               data: res.userInfo

@@ -18,9 +18,9 @@ Page({
     // 车位与锁图
     carImg:'../../img/parking-p_icon_choice_default@2x.png',
     lockImg:'../../img/parking-s_icon_choice_default@2x.png',
-    // 地图99
-    markerWidth:56,
-    markerHeight:61,
+    // 地图
+    markerWidth:28,
+    markerHeight:31,
     longitude: '',
     latitude: '',
     markers: [],
@@ -33,15 +33,24 @@ Page({
     payTime:0,//购买时长
     parkTime:0,//停车时长
     parkNo:'',//车位编号
-    timestamp: 0//停车开始时间戳
+    timestamp: 0,//停车开始时间戳
+    carFree: 0,
+    carPrice: 0,
+    startParkedTime: 0,
+    userID:0,
+    longTime:0,
+    openPrompt: true
   },
   
   onReady: function (e) {
     this.mapCtx = wx.createMapContext('map')
   },
   
-  onLoad: function(){
-    
+  onShow: function(){
+    // 转发
+    wx.showShareMenu({
+      withShareTicket: true
+    });
     var that = this;
     app.getUserInfo(function (userInfo) {
       //更新数据
@@ -53,16 +62,25 @@ Page({
         // }, 300);
         // return;
       }
-      console.log("index.js onShow 2");
+
       that.setData({
         userInfo: userInfo
       })
     });
+    // 获取用户ID
+    wx.getStorage({
+      key: 'userID',
+      success: function (res) {
+        that.setData({
+          userID: res.data,
+        });
+      }
+    })
     // 获取购买时长
     wx.getStorage({
       key: 'timeInput',
       success: function (res) {
-        console.log(res.data)
+
         if (res.data) {
           that.setData({
             payTime: res.data,
@@ -76,7 +94,7 @@ Page({
     wx.getStorage({
       key: 'orderNo',
       success: function (res) {
-        console.log(res.data)
+
         if (res.data) {
           that.setData({
             orderNo: res.data,
@@ -88,7 +106,7 @@ Page({
     wx.getStorage({
       key: 'parkingNumber',
       success: function (res) {
-        console.log(res.data)
+
         that.setData({
           parkNo: res.data
         });
@@ -106,45 +124,41 @@ Page({
           },
           success: function (res) {
             wx.hideLoading();
-            console.log(res)
+
             that.setData({
               timestamp: res.data.data.startParkedTime
             });
+            wx.setStorage({
+              key: 'carFree',
+              data: res.data.data.carFree
+            });
+            wx.setStorage({
+              key: 'carPrice',
+              data: res.data.data.carPrice
+            });
+            wx.setStorage({
+              key: 'startParkedTime',
+              data: res.data.data.startParkedTime
+            });
+
+
             __compuTime(res.data.data.carFree, res.data.data.carPrice, res.data.data.startParkedTime)
           }
         });
       }
+
     });
-    // 获取停车开始时间戳
-    // wx.getStorage({
-    //   key: 'timestamp',
-    //   success: function (res) {
-    //     console.log(res.data)
-    //     that.setData({
-    //       timestamp: res.data
-    //     });
-        
-    //     // __compuTime();
-    //   }
-    // });
-    // if (that.data.timestamp > 0) {
-     
-    // }
+
 
     function __compuTime(carFree, carPrice, startParkedTime) {
-      
+
       var timestampNow = Date.parse(new Date());
-      // console.log(that.data.timestamp);
-      // console.log(timestampNow);
+
       var resultTime = timestampNow - startParkedTime
+
       var m = parseInt(resultTime / 60000);
-      if (m <= carFree) {
-        that.setData({
-          parkTime: m,
-          consumedMoney: '0.00'
-        })
-      }
-      if (m > carFree && m <= 60) {
+
+      if (m <= 60){
         that.setData({
           parkTime: m,
           consumedMoney: carPrice / 100 + '.00'
@@ -160,144 +174,215 @@ Page({
       }
       if (that.data.payTime != 0) {
         if (resultTime >= (parseFloat(that.data.payTime) * 3600000 - 300000)) {
-          // if (resultTime >= (parseFloat(that.data.payTime))) {
-          clearTimeout(parkingTime);
-          wx.showModal({
-            title: '购买时长',
-            content: '您所购买的时长即将用尽，请再次购买。',
-            success: function (res) {
-              if (res.confirm) {
-                // console.log('用户点击确定');
-                // clearTimeout(parkingTime);
-                wx.navigateTo({
-                  url: '../paytime/paytime'
-                })
-                return
-              } else if (res.cancel) {
-                // clearTimeout(parkingTime);
-                wx.showModal({
-                  title: '停止计费',
-                  content: '您确定要停止计费吗，请确保及时驾离车位',
-                  success: function (res) {
-                    if (res.confirm) {
-                      var oData = {
-                        parkingNo: that.data.parkNo,
-                        statu: 0
-                      }
-                      // 跳转/pkmg/upparkingno      1
-                      app.func.req('/pkmg/upparkingno', oData, function (res) {
-                        console.log(res);
-                        if(res.success){
-                          app.func.req('/parking/parkInfo', { address: oAddress }, function (res) {
-                            console.log(res);
-                            if (res.data.length > 0) {
-                              var oArr = [];
-                              for (var i = 0; i < res.data.length; i++) {
-                                var oObj = {};
-                                if (res.data[i].SumPark == res.data[i].SumUsePark && res.data[i].SumPark == 0 && res.data[i].SumUsePark == 0) {
-                                  continue
-                                } else {
-                                  if (res.data[i].SumPark === res.data[i].SumUsePark) {
-                                    oObj.iconPath = "../../img/parking-p_icon_choice_pressed@2x.png";
-                                  } else {
-                                    oObj.iconPath = "../../img/parking-p_icon_choice_default@2x.png";
-                                  }
-                                }
-                                oObj.id = res.data[i].parkNo;
-                                oObj.latitude = res.data[i].latitude;
-                                oObj.longitude = res.data[i].longitude;
-                                oObj.width = 28;
-                                oObj.height = 31;
-                                oArr.push(oObj);
-                                oObj = {};
-                              }
-                              that.setData({
-                                markers: oArr
-                              })
-                              wx.setStorage({
-                                key: 'parkTime1',
-                                data: that.data.parkTime
-                              });
-                              wx.setStorage({
-                                key: 'parkNo1',
-                                data: that.data.parkNo
-                              });
-                              wx.setStorage({
-                                key: 'consumedMoney1',
-                                data: that.data.consumedMoney
-                              });
-                              wx.setStorage({
-                                key: 'payTime1',
-                                data: that.data.payTime
-                              });
-                              // console.log('用户点击确定');
-                              that.setData({
-                                parkShow: false,//是否显示下面的
-                                consumedMoney: '0.00',//已消费
-                                payTime: 0,//购买时长
-                                parkTime: 0,//停车时长
-                                parkNo: ''//车位编号
-                              });
-                              // clearTimeout(parkingTime);
-                              // wx.removeStorage({
-                              //   key: 'payTime',
-                              //   success: function (res) {
-                              //     console.log(res.data)
-                              //   }
-                              // });
-                              wx.removeStorage({
-                                key: 'timeInput',
-                                success: function (res) {
-                                  console.log(res.data)
-                                }
-                              });
-                              wx.removeStorage({
-                                key: 'parkingNumber',
-                                success: function (res) {
-                                  console.log(res.data)
-                                }
-                              });
-
-                              wx.removeStorage({
-                                key: 'timestamp',
-                                success: function (res) {
-                                  console.log(res.data)
-                                }
-                              });
-                              wx.removeStorage({
-                                key: 'parkTime',
-                                success: function (res) {
-                                  console.log(res.data)
-                                }
-                              });
-                              setTimeout(function () {
-                                wx.navigateTo({
-                                  url: '../endbilling/endbilling',
-                                })
-                              }, 500)
-                            }
-                          });
-
-
-                          
-                        }
-                      });
-                      
-                    } else if (res.cancel) {
-                      // console.log('用户点击取消');
-                    }
-                  }
-                });
-
-                // console.log('用户点击取消');
-              }
-            }
+          var LongTime = Math.ceil((((resultTime - (Math.ceil(that.data.payTime) * 3600000)) / 1000) / 60) / 60)
+          that.setData({
+            longTime: LongTime
           });
-          return
+
+          // clearTimeout(parkingTime);
+          if (that.data.openPrompt){
+            that.setData({
+              openPrompt: false
+            })
+            wx.showModal({
+              title: '购买时长',
+              content: '如需继续停车，请继续前往购买时长！',
+              success: function (res) {
+                if (res.confirm) {
+                  that.setData({
+                    openPrompt: true
+                  })
+                  wx.navigateTo({
+                    url: '../paytime/paytime'
+                  })
+                  return
+                } else if (res.cancel) {
+
+                  wx.showModal({
+                    title: '您确定要停止计费吗？',
+                    content: '我们会把您超时未支付的金额推送给车位管理！',
+                    success: function (res) {
+                      if (res.confirm) {
+                        
+                        clearTimeout(parkingTime);
+                        that.setData({
+                          openPrompt: true
+                        });
+                        var oData = {
+                          parkingNo: that.data.parkNo,
+                          statu: 0
+                        }
+                        wx.setStorage({
+                          key: 'longTime',
+                          data: that.data.longTime
+                        });
+                        // 跳转/pkmg/upparkingno      1
+                        app.func.req('/pkmg/upparkingno', oData, function (res) {//改变车位状态接口
+                          if(res.success){
+                            app.func.req('/push/error', { carNo: that.data.parkNo, id: that.data.userID, parkingNo: that.data.parkNo, longTime: that.data.longTime}, function (res) {//报警接口
+
+                              app.func.req('/parking/parkInfo', { address: oAddress }, function (res) {
+
+                                if (res.data.length > 0) {
+                                  var oArr = [];
+                                  for (var i = 0; i < res.data.length; i++) {
+                                    var oObj = {};
+                                    if (res.data[i].SumPark == res.data[i].SumUsePark && res.data[i].SumPark == 0 && res.data[i].SumUsePark == 0) {
+                                      continue
+                                    } else {
+                                      if (res.data[i].SumPark === res.data[i].SumUsePark) {
+                                        oObj.iconPath = "../../img/parking-p_icon_choice_pressed@2x.png";
+                                      } else {
+                                        oObj.iconPath = "../../img/parking-p_icon_choice_default@2x.png";
+                                      }
+                                    }
+                                    oObj.id = res.data[i].parkNo;
+                                    oObj.latitude = res.data[i].latitude;
+                                    oObj.longitude = res.data[i].longitude;
+                                    oObj.width = 28;
+                                    oObj.height = 31;
+                                    oArr.push(oObj);
+                                    oObj = {};
+                                  }
+                                  that.setData({
+                                    markers: oArr
+                                  })
+                                  wx.setStorage({
+                                    key: 'parkTime1',
+                                    data: that.data.parkTime
+                                  });
+                                  wx.setStorage({
+                                    key: 'parkNo1',
+                                    data: that.data.parkNo
+                                  });
+                                  wx.setStorage({
+                                    key: 'consumedMoney1',
+                                    data: that.data.consumedMoney
+                                  });
+                                  wx.setStorage({
+                                    key: 'payTime1',
+                                    data: that.data.payTime
+                                  });
+
+                                  that.setData({
+                                    parkShow: false,//是否显示下面的
+                                    consumedMoney: '0.00',//已消费
+                                    payTime: 0,//购买时长
+                                    parkTime: 0,//停车时长
+                                    parkNo: ''//车位编号
+                                  });
+
+                                  wx.removeStorage({
+                                    key: 'timeInput',
+                                    success: function (res) {
+                                      console.log(res.data)
+                                    }
+                                  });
+                                  wx.removeStorage({
+                                    key: 'carFree',
+                                    success: function (res) {
+                                      console.log(res.data)
+                                    }
+                                  });
+                                  wx.removeStorage({
+                                    key: 'carPrice',
+                                    success: function (res) {
+                                      console.log(res.data)
+                                    }
+                                  });
+                                  wx.removeStorage({
+                                    key: 'timeInput',
+                                    success: function (res) {
+                                      console.log(res.data)
+                                    }
+                                  });
+                                  wx.removeStorage({
+                                    key: 'parkingNumber',
+                                    success: function (res) {
+                                      console.log(res.data)
+                                    }
+                                  });
+
+                                  wx.removeStorage({
+                                    key: 'startParkedTime',
+                                    success: function (res) {
+                                      console.log(res.data)
+                                    }
+                                  });
+                                  wx.removeStorage({
+                                    key: 'parkTime',
+                                    success: function (res) {
+                                      console.log(res.data)
+                                    }
+                                  });
+                                  setTimeout(function () {
+                                    wx.navigateTo({
+                                      url: '../endbillingtow/endbillingtow',
+                                    })
+                                  }, 500)
+                                }
+                              });
+                            });
+                          }
+                        });
+                        
+                      } else if (res.cancel) {
+                        that.setData({
+                          openPrompt: true
+                        });
+                        wx.navigateTo({
+                          url: '../paytime/paytime'
+                        })
+                        return
+                      }
+                    }
+                  });
+
+                }
+              }
+            });
+            return
+          }
+        }else{
+          that.setData({
+            longTime: 0
+          });
+
         }
         
       }
-      parkingTime = setTimeout(function () { __compuTime() }, 1000)
+      parkingTime = setTimeout(function () {
+        wx.getStorage({
+          key: 'carFree',
+          success: function (res) {
+
+            that.setData({
+              carFree: res.data
+            });
+          }
+        });
+        wx.getStorage({
+          key: 'carPrice',
+          success: function (res) {
+
+            that.setData({
+              carPrice: res.data
+            });
+          }
+        });
+        wx.getStorage({
+          key: 'startParkedTime',
+          success: function (res) {
+
+            that.setData({
+              startParkedTime: res.data
+            });
+
+            __compuTime(that.data.carFree, that.data.carPrice, that.data.startParkedTime)
+          }
+        });
+        
+       }, 1000)
     }
 
     wx.getLocation({
@@ -309,18 +394,12 @@ Page({
         var demo = new QQMapWX({
           key: 'XKBBZ-5RKWS-4TQOB-6CMPO-U2ORF-V5BKW' // 必填
         });
-        console.log(longitude);
-        console.log(latitude);
+
         that.setData({
           longitude: longitude,
           latitude: latitude,
         });
-        // 绑定手机号码需要接口判断是否绑定
-        // setTimeout(function () {
-        //   wx.navigateTo({
-        //     url: '../bindphone/bindphone'
-        //   });
-        // }, 300);
+
         // 调用接口
         demo.reverseGeocoder({
           location: {
@@ -328,11 +407,11 @@ Page({
             longitude: longitude
           },
           success: function (res) {
-            console.log(res);
+
             // 获取当前区域
-            // console.log(res.result.address_component.district);
+
             oAddress = res.result.address_component.district;
-            console.log(oAddress);
+
             app.func.req('/parking/parkInfo', { address: oAddress }, function (res) {
               console.log(res);
               if (res.data.length > 0) {
@@ -361,12 +440,7 @@ Page({
                 })
               }
             });
-          },
-          fail: function (res) {
-            console.log(res);
-          },
-          complete: function (res) {
-            console.log(res);
+
           }
         });
       }
@@ -380,24 +454,14 @@ Page({
       }
     });
   },
-  onShow: function(){
-    var that = this;
-    // this.setData({
-    //   payTime: res.data,
-    //   // payTime: 1,
-    //   parkShow: true,
-    //   // winHeight: that.data.winHeight - 185
-    // })
-    
-    // that.setData({
-    //   timestamp: '1513083321000'
-    // });
-    // __compuTime();
-    // 计时，计费
-    
-  },
+  // onShow: function(){
+  //   wx.showShareMenu({
+  //      withShareTicket: true
+  //   });
+  //   page.onLoad();
+  // },
   getUserInfo: function (e) {
-    console.log(e)
+
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
@@ -407,14 +471,13 @@ Page({
 
   // 监听markers
   markertap(e) {
-    console.log(e.markerId);
-    console.log(e);
+
     var oData = {
           address: oAddress,
           parkNo: e.markerId
         }
     app.func.req('/parking/iswhether', oData, function (res) {
-      console.log(res);
+
       if (res.success) {//满
         wx.showModal({
           title: '提示',
@@ -436,7 +499,7 @@ Page({
         });
 
         app.func.req('/parking/parkInfo', oData, function (res) {
-          console.log(res);
+
           wx.openLocation({
             latitude: parseInt(res.data[0].latitude),
             longitude: parseInt(res.data[0].longitude),
@@ -459,24 +522,188 @@ Page({
   // 停止消费
   stopPark: function(e){
     var that = this;
-    wx.showModal({
-      title: '停止计费',
-      content: '您确定要停止计费吗，请确保及时驾离车位',
-      success: function (res) {
-        if (res.confirm) {
-          var oData = {
-            orderNo: that.data.orderNo
-          }
-          // 跳转/pkmg/upparkingno      1 
-          app.func.req('/wxpay/refund', oData, function (res) {
-            console.log(res.data);
-            wx.setStorage({
-              key: 'refundMoney',
-              data: res.data
+    if (that.data.longTime > 0) {
+      // if (resultTime >= (parseFloat(that.data.payTime))) {
+      clearTimeout(parkingTime);
+      wx.showModal({
+        title: '购买时长',
+        content: '如需继续停车，请继续前往购买时长！',
+        success: function (res) {
+          if (res.confirm) {
+            that.setData({
+              openPrompt: true
             });
-            // if (res.success) {
+            wx.navigateTo({
+              url: '../paytime/paytime'
+            })
+            return
+          } else if (res.cancel) {
+            // clearTimeout(parkingTime);
+            wx.showModal({
+              title: '您确定要停止计费吗？',
+              content: '我们会把您超时未支付的金额推送给车位管理！',
+              success: function (res) {
+                if (res.confirm) {
+                  that.setData({
+                    openPrompt: true
+                  });
+                  clearTimeout(parkingTime);
+                  var oData = {
+                    parkingNo: that.data.parkNo,
+                    statu: 0
+                  }
+                  wx.setStorage({
+                    key: 'longTime',
+                    data: that.data.longTime
+                  });
+                  // 跳转/pkmg/upparkingno      1
+                  app.func.req('/pkmg/upparkingno', oData, function (res) {//改变车位状态接口
+                    if (res.success) {
+                      app.func.req('/push/error', { carNo: that.data.parkNo, id: that.data.userID, parkingNo: taht.data.parkNo, longTime: that.data.longTime }, function (res) {//报警接口
+
+                        app.func.req('/parking/parkInfo', { address: oAddress }, function (res) {
+
+                          if (res.data.length > 0) {
+                            var oArr = [];
+                            for (var i = 0; i < res.data.length; i++) {
+                              var oObj = {};
+                              if (res.data[i].SumPark == res.data[i].SumUsePark && res.data[i].SumPark == 0 && res.data[i].SumUsePark == 0) {
+                                continue
+                              } else {
+                                if (res.data[i].SumPark === res.data[i].SumUsePark) {
+                                  oObj.iconPath = "../../img/parking-p_icon_choice_pressed@2x.png";
+                                } else {
+                                  oObj.iconPath = "../../img/parking-p_icon_choice_default@2x.png";
+                                }
+                              }
+                              oObj.id = res.data[i].parkNo;
+                              oObj.latitude = res.data[i].latitude;
+                              oObj.longitude = res.data[i].longitude;
+                              oObj.width = 28;
+                              oObj.height = 31;
+                              oArr.push(oObj);
+                              oObj = {};
+                            }
+                            that.setData({
+                              markers: oArr
+                            })
+                            wx.setStorage({
+                              key: 'parkTime1',
+                              data: that.data.parkTime
+                            });
+                            wx.setStorage({
+                              key: 'parkNo1',
+                              data: that.data.parkNo
+                            });
+                            wx.setStorage({
+                              key: 'consumedMoney1',
+                              data: that.data.consumedMoney
+                            });
+                            wx.setStorage({
+                              key: 'payTime1',
+                              data: that.data.payTime
+                            });
+
+                            that.setData({
+                              parkShow: false,//是否显示下面的
+                              consumedMoney: '0.00',//已消费
+                              payTime: 0,//购买时长
+                              parkTime: 0,//停车时长
+                              parkNo: ''//车位编号
+                            });
+
+                            wx.removeStorage({
+                              key: 'timeInput',
+                              success: function (res) {
+                                console.log(res.data)
+                              }
+                            });
+                            wx.removeStorage({
+                              key: 'carFree',
+                              success: function (res) {
+                                console.log(res.data)
+                              }
+                            });
+                            wx.removeStorage({
+                              key: 'carPrice',
+                              success: function (res) {
+                                console.log(res.data)
+                              }
+                            });
+                            wx.removeStorage({
+                              key: 'timeInput',
+                              success: function (res) {
+                                console.log(res.data)
+                              }
+                            });
+                            wx.removeStorage({
+                              key: 'parkingNumber',
+                              success: function (res) {
+                                console.log(res.data)
+                              }
+                            });
+
+                            wx.removeStorage({
+                              key: 'startParkedTime',
+                              success: function (res) {
+                                console.log(res.data)
+                              }
+                            });
+                            wx.removeStorage({
+                              key: 'parkTime',
+                              success: function (res) {
+                                console.log(res.data)
+                              }
+                            });
+                            setTimeout(function () {
+                              wx.navigateTo({
+                                url: '../endbillingtow/endbillingtow',
+                              })
+                            }, 500)
+                          }
+                        });
+                      });
+                    }
+                  });
+
+                } else if (res.cancel) {
+                  that.setData({
+                    openPrompt: true
+                  });
+                  wx.navigateTo({
+                    url: '../paytime/paytime'
+                  })
+                  return
+
+                }
+              }
+            });
+
+
+          }
+        }
+      });
+      return
+    } else {
+      wx.showModal({
+        title: '停止计费',
+        content: '您确定要停止计费吗，请确保及时驾离车位',
+        success: function (res) {
+          if (res.confirm) {
+            var oData = {
+              orderNo: that.data.orderNo,
+              id: that.data.userID
+            }
+            // 跳转/pkmg/upparkingno      1 
+            app.func.req('/wxpay/refund', oData, function (res) {
+
+              wx.setStorage({
+                key: 'refundMoney',
+                data: res.data
+              });
+
               app.func.req('/parking/parkInfo', { address: oAddress }, function (res) {
-                console.log(res);
+
                 if (res.data.length > 0) {
                   var oArr = [];
                   for (var i = 0; i < res.data.length; i++) {
@@ -525,12 +752,7 @@ Page({
                     parkNo: ''//车位编号
                   });
                   clearTimeout(parkingTime);
-                  // wx.removeStorage({
-                  //   key: 'payTime',
-                  //   success: function (res) {
-                  //     console.log(res.data)
-                  //   }
-                  // });
+
                   wx.removeStorage({
                     key: 'timeInput',
                     success: function (res) {
@@ -562,72 +784,29 @@ Page({
                   }, 500)
                 }
               });
-            // }
-          });
+            });
 
 
-
-          // console.log('用户点击确定');
-          
-        } else if (res.cancel) {
-          // console.log('用户点击取消');
+          } else if (res.cancel) {
+            console.log('用户点击取消');
+          }
         }
-      }
-    });
-  },
+      });
+    }
 
-  // // 点击智慧车位
-  // parkingP:function(e){
-  //   console.log();
-  //   this.setData({
-  //     carImg:'../../img/parking-p_icon_choice_pressed@2x.png',
-  //     lockImg: '../../img/parking-s_icon_choice_default@2x.png',
-  //     markers: [{
-  //       iconPath: "../../img/park-lot_p_icon@2x.png",
-  //       id: 0,
-  //       latitude: 22.574083,
-  //       longitude: 113.887427,
-  //       width: this.data.markerWidth,
-  //       height: this.data.markerHeight,
-  //     }, {
-  //       iconPath: "../../img/park-lot_p_icon@2x.png",
-  //       id: 1,
-  //       latitude: 22.57566,
-  //       longitude: 113.887603,
-  //       width: this.data.markerWidth,
-  //       height: this.data.markerHeight,
-  //     }]
-  //   });
-  // },
-  // // 点击车位锁
-  // parkingS:function(e){
-  //   this.setData({
-  //     carImg: '../../img/parking-p_icon_choice_default@2x.png',
-  //     lockImg: '../../img/parking-s_icon_choice_pressed@2x.png',
-  //     markers: [{
-  //       iconPath: "../../img/park-lock_s_icon@2x.png",
-  //       id: 2,
-  //       latitude: 22.575261,
-  //       longitude: 113.887129,
-  //       width: this.data.markerWidth,
-  //       height: this.data.markerHeight,
-  //     }, {
-  //       iconPath: "../../img/park-lock_s_icon@2x.png",
-  //       id: 3,
-  //       latitude: 22.575073,
-  //       longitude: 113.887798,
-  //       width: this.data.markerWidth,
-  //       height: this.data.markerHeight,
-  //     }]
-  //   });
-  // },
+    
+  },
   // 刷新页面，再次请求接口
   refreshtap:function(e){
-    console.log(oAddress);
+
+    this.setData({
+      carImg: '../../img/parking-p_icon_choice_default@2x.png',
+      lockImg: '../../img/parking-s_icon_choice_default@2x.png',
+    });
     var that = this;
     // map.clearOverlays();//清除覆盖物
     app.func.req('/parking/parkInfo', { address: oAddress }, function (res) {
-      console.log(res);
+
       if (res.data.length > 0) {
         var oArr = [];
         for (var i = 0; i < res.data.length; i++) {
@@ -671,42 +850,103 @@ Page({
       url: '../person/person'
     })
   },
-  // // 点击tab切换
-  // swichNav: function (e) {
-  //   this.setData({
-  //     swichNav1: false,
-  //     swichNav: true
-  //   })
-  // },
-  // swichNav1: function (e) {
-  //   this.setData({
-  //     swichNav: false,
-  //     swichNav1: true
-  //   })
-  // },
-  
+
+
   // 我要停车
   stopCar: function(e){
     var that = this;
-    console.log(1);
+
     // 请求看是否有车位编号与车牌号，无跳手动输入，有跳订单
     // 输入车位编号
-    wx.navigateTo({
-      url: '../carNumber/carNumber',
-      success: function (res) {
-        console.log('跳转到carNumber页面成功')// success
-      },
-      fail: function () {
-        console.log('跳转到carNumber页面失败')  // fail
-      },
-      complete: function () {
-        console.log('跳转到carNumber页面完成') // complete
+    var oData = {
+      id: that.data.userID
+    }
+    app.func.req('/appuser/unpaidrecord', oData, function (res) {
+      if(res.success){//有未支付
+
+        var OMoney = parseInt(res.data[0].money)
+        var Otime = res.data[0].times
+        let oContent = '您之前还有未支付的订单！需支付完成后才可继续停车，总金额是：' + (parseInt(res.data[0].money) / 100) + '元。是否支付。';
+        wx.showModal({
+          title: '警告',
+          content: oContent,
+          success: function (res) {
+            if (res.confirm) {
+              wx.getStorage({
+                key: 'token',
+                success: function (res) {
+                  wx.request({
+                    url: http.reqUrl + '/wx/appusr/unpaid/wxpay',
+                    data: {
+                      money: OMoney,
+                      userid: that.data.userID,
+                      times: Otime
+                    },
+                    method: 'POST',
+                    header: {
+                      'content-type': 'application/x-www-form-urlencoded',
+                      'token': res.data
+                    },
+                    success: function (res) {
+
+                      wx.requestPayment({
+                        'timeStamp': res.data.data.timeStamp + '',
+                        'nonceStr': res.data.data.nonceStr + '',
+                        'package': res.data.data.package + '',
+                        'signType': res.data.data.signType + '',
+                        'paySign': res.data.data.paySign + '',
+                        'success': function (res) {
+                          wx.reLaunch({
+                            url: '../index/index'
+                          })
+                        },
+                        'fail': function (res) {
+
+                          var oMassage = res;
+                          wx.showModal({
+                            title: '警告',
+                            content: oMassage,
+                            showCancel: false,
+                            success: function (res) {
+                              if (res.confirm) {
+                                console.log('用户点击确定')
+                              }
+                            }
+                          });
+                        }
+                      });
+
+                    }
+                  })
+                }
+              });
+
+            } else if (res.cancel) {
+              console.log('用户点击取消');
+            }
+          }
+        });
+      }else{//没有违停
+        wx.navigateTo({
+          url: '../carNumber/carNumber',
+          success: function (res) {
+            console.log('success')
+          },
+          fail: function () {
+            console.log('fail')
+          },
+          complete: function () {
+            console.log('complete')
+          }
+        });
       }
     });
-    // 绑定手机号码
-    // wx.navigateTo({
-    //   url: '../bindphone/bindphone'
-    // })
+    
+  },
+  parkingS: function(){
+    wx.reLaunch({
+      url: '../lockMap/lockMap'
+    })
   }
 
 });

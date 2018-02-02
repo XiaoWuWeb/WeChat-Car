@@ -1,0 +1,107 @@
+<!-- <view style="width:100%;height:auto;position: relative;margin-bottom:15rpx;">
+  <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="swiper-img">
+    <block wx:for="{{imgUrls}}">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" mode="scaleToFill" />
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class="parking-name">科海路8号停车场</view>
+</view> -->
+<view class="info-list-container">
+   <view class="info-list-item">
+    <image class="info-list-icon" src="../../img/Parking-record_iocn_hours@2x.png"></image>
+    <view class="info-list-content">
+      <view class="info-list-key">名称</view>
+      <view class="info-list-value">{{oName}}</view>
+    </view>
+  </view> 
+  <view class="info-list-item" bindtap="openLocation">
+    <image class="info-list-icon" src="../../img/mobile_02.png"></image>
+    <view class="info-list-content">
+      <view class="info-list-key">位置</view>
+      <text class="info-list-value">{{oAddress}}</text>
+    </view>
+  </view>
+  <view class="flex-row">
+    <view class="flex-column {{swichNav==1 ? 'on' : ''}}" data-current="0" bindtap="swichNav" style="padding:20rpx 0">
+      <view class="text-center" style="font-size:14px;color:gray;margin:15rpx 0;">预约车位</view>
+      <view class="text-center" style="font-size:28px;color:orange;">{{stopNum}}</view>
+    </view>
+    <view class="x-sidebar"></view>
+     <view class="u-auto flex-column {{swichNav1==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav1" style="padding:20rpx 0">
+      <view class="text-center" style="font-size:14px;color:gray;margin:15rpx 0;">可租车位</view>
+      <view class="text-center" style="font-size:28px;color:rgb(50,181,29);">{{rentNum}}</view>
+    </view> 
+    <!-- <view class="u-auto flex-column nav-son borders {{shownavindex == 2? 'active' : ''}}" bindtap="list" data-nav="2">
+      <view class="content text-center" style="font-size:14px;color:gray;margin:15rpx 0;">{{oItem}}<view class="icon"></view></view>
+      <view class="text-center" style="font-size:28px;color:rgb(50,181,29);">48</view>
+    </view> -->
+    <!-- <view class="temp temp1 {{nzopen ? 'slidown' : 'slidup'}} {{nzshow ? 'disappear':''}}">
+      <view wx:for="{{content}}" wx:key="oType" data-data="{{item}}" bindtap='itemTap'>
+        {{item}}
+      </view>
+    </view>  -->
+  </view>
+  <view class="temp temp1 {{nzopen ? 'slidown' : 'slidup'}} {{nzshow ? 'disappear':''}}">
+    <view wx:for="{{content}}" wx:key="oType" data-data="{{item}}" bindtap='itemTap'>
+      {{item}}
+    </view>
+  </view> 
+</view>
+<view class="search">
+  <view class="search-result">
+    <scroll-view scroll-y="true">
+      <!-- <view class="result-item" wx:for="{{searchSongList}}" wx:key="refund" data-data="{{item}}">  
+        <view class="clearfix">
+          <text class="title flt">{{item.explains}}</text>
+          <text class="money frt">{{item.money}}元</text> 
+        </view>
+        <view class="clearfix">
+          <text class="subtitle flt">{{item.times}}</text>
+          <text class="subtitle frt">微信支付</text>
+        </view>
+      </view> -->
+      <view class="parking-list-section center" bindtap='lockDetailTap' wx:for="{{searchSongList}}" wx:key="stopLock" data-data="{{item}}">
+        <view class="parking-list-item">
+          <view class="parking-distance">车位号：{{item.carId}}</view>
+          <view class="left-number">{{parkingNoName}}</view>
+        </view>
+        <image class="arrow-right" src="../../img/arrow_icon@2x.png"></image>
+      </view>
+      <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view>
+      <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view>
+    </scroll-view>
+    <view class='img-box' hidden="{{!imgParking}}">
+      <image src='../../img/Recharge-record_icon@2x.png'></image>
+      <text>暂无退款记录哦</text>
+    </view>
+    <view class="fullbg {{isfull ?'fullopacity':''}}" bindtap="hidebg"></view>
+  </view>
+</view>
+<!-- <view class="search {{swichNav1?'show':'hidden'}}">
+  <view class="search-result">
+    <scroll-view scroll-y="true">
+      <view class="parking-list-section center" bindtap='lockDetailTap' wx:for="{{searchSongList}}" wx:key="stopLock" data-data="{{item}}">
+        <view class="parking-list-item">
+          <view class="parking-distance">车位号：{{item.carId}}</view>
+          <view class="left-number">可租车位</view>
+        </view>
+        <image class="arrow-right" src="../../img/arrow_icon@2x.png"></image>
+      </view>
+      <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view>
+      <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view>
+    </scroll-view>
+    <view class='img-box' hidden="{{!imgParking}}">
+      <image src='../../img/Recharge-record_icon@2x.png'></image>
+      <text>暂无退款记录哦</text>
+    </view>
+    <view class="fullbg {{isfull ?'fullopacity':''}}" bindtap="hidebg"></view>
+  </view>
+</view> -->
+<!-- <view class="bottom-btn-group">
+  <view class="bottom-btn primary u-1of2" bindtap="preOrder">预约车位</view>
+  <view class="bottom-btn plain u-auto">
+    <image class="button-icon" src="../../img/map_marker.png"></image>
+    查看路线</view>
+</view> -->

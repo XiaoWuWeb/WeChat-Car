@@ -1,0 +1,30 @@
+<view class="search">
+  <view class="search-result">
+    <scroll-view scroll-y="true" bindscrolltolower="searchScrollLower">
+      <view class="result-item" wx:for="{{searchSongList}}" wx:key="parking" data-data="{{item}}" >  
+        <view>
+          <image class='item-address' src='../../img/Parking-record_iocn_loction@2x.png'></image>
+          <text class="title">{{item.park_name}}</text>
+        </view>
+        <view>
+          <image class='item-time' src='../../img/Parking-record_iocn_time@2x.png'></image>
+          <text class="subtitle">{{item.park_time}}</text>
+        </view>
+        <view>
+          <image class='item-long' src='../../img/Parking-record_iocn_hours@2x.png'></image>
+          <text class="subtitle">{{item.park_end_time}}</text>
+        </view>
+        <view class='money-body clearfix'>
+          <text class="title-money flt">共计：</text>
+          <text class='item-money flt'>{{item.orderMoney}}元</text>
+        </view>
+      </view>
+      <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view>
+      <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view>
+    </scroll-view>
+    <view class='img-box' hidden="{{!imgParking}}">
+      <image src='../../img/Recharge-record_icon@2x.png'></image>
+      <text>暂无停车记录哦</text>
+    </view>
+  </view>
+</view>

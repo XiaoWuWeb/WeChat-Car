@@ -5,9 +5,18 @@ Page({
     parkNo1: 0,
     payTime1:0,
     consumedMoney1: '',
-    moneyremain:''
+    moneyremain: 0
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '华腾智能停车',
+      path: '/pages/index/index',
+    }
   },
   onLoad: function(){
+    wx.showShareMenu({
+      withShareTicket: true
+    });
     var that = this;
     wx.getStorage({
       key: 'parkTime1',
@@ -20,9 +29,15 @@ Page({
     wx.getStorage({
       key: 'refundMoney',
       success: function (res) {
-        that.setData({
-          moneyremain: res.data
-        });
+        if(res.data){
+          that.setData({
+            moneyremain: (parseInt(res.data) / 100)
+          });
+        }else{
+          that.setData({
+            moneyremain: 0
+          });
+        }
       },
     });
     wx.getStorage({

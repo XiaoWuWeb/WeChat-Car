@@ -1,0 +1,190 @@
+
+page{  
+  display: flex;  
+  flex-direction: column;  
+  height: 100%;  
+  background-color: #ebebeb;
+}  
+
+.parking-list-section{
+    background-color: white;
+    display: flex;
+    border-bottom: 1rpx solid gainsboro;
+}
+.parking-list-item{
+    margin: 15rpx;
+}
+
+.plain-text{
+    font-size: 14px;
+    color: gray;
+}
+
+.parking-name{
+    max-width: 310px;
+    font-size: 16px;
+    color: #333;
+    overflow: hidden;  
+    text-overflow: ellipsis;  
+    white-space: nowrap;  
+    line-height:25px; 
+}
+
+.left-number{
+    display: inline-block;
+    color: rgb(50,181,29);
+    font-size: 14px;
+}
+
+.parking-distance{
+    display: inline-block;
+    font-size: 14px;
+    color: rgb(50,181,29);
+}
+
+.content{
+    justify-content: space-between;
+    flex: 1
+}
+
+.arrow-right{
+  width: 11px;
+  height: 17px;
+  margin-right: 10px;
+}
+  
+/*搜索*/  
+.search{  
+  flex: auto;  
+  display: flex;  
+  flex-direction: column;  
+  background: #fff;  
+}  
+.search-bar{  
+  flex: none;  
+  display: flex;
+  align-items: center;  
+  justify-content: space-between;  
+  padding: 20rpx;  
+  background: #f4f4f4;  
+}  
+.search-wrap{  
+  position: relative;  
+  flex: auto;  
+  display: flex;  
+  align-items: center;  
+  height: 80rpx;  
+  padding: 0 20rpx;  
+  background: #fff;  
+  border-radius: 6rpx;  
+}  
+.search-wrap .icon-search{  
+  margin-right: 10rpx;  
+}  
+.search-wrap .search-input{  
+  flex: auto;  
+  font-size: 28rpx;  
+}  
+.search-cancel{  
+  padding: 0 20rpx;  
+  font-size: 28rpx;  
+}  
+  
+/*搜索结果*/  
+.search-result{  
+  flex: auto;  
+  position: relative;  
+}  
+.search-result scroll-view{  
+  position: absolute;  
+  bottom: 0;  
+  left: 0;  
+  right: 0;  
+  top: 0;  
+}  
+.result-item{  
+  position: relative;  
+  display: flex;  
+  flex-direction: column;  
+  padding: 20rpx 20px 20rpx 20px;  
+  overflow: hidden;  
+  border-bottom: 2rpx solid #e5e5e5;  
+}  
+  
+.result-item .media{  
+  position: absolute;  
+  left: 16rpx;  
+  top: 16rpx;  
+  width: 80rpx;  
+  height: 80rpx;  
+  border-radius: 999rpx;  
+}  
+.result-item text{
+  display:block;
+}
+
+.result-item  .money{
+  font-size: 15px;
+  color: #32b51c;
+}
+.result-item .title,  
+.result-item .subtitle,
+.result-item .money{
+  overflow: hidden;  
+  text-overflow: ellipsis;  
+  white-space: nowrap;  
+  line-height: 36rpx;  
+}  
+.result-item .title{
+  font-size: 12px;
+  margin-bottom: 4rpx;  
+  color: #222;  
+}  
+.result-item .subtitle{ 
+  color: #909090;  
+  font-size: 12px;  
+}  
+.result-item:first-child .subtitle text{  
+  margin-right: 20rpx;  
+}  
+.result-item:not(:first-child) .subtitle text:not(:first-child):before{  
+  content: '/';  
+  margin: 0 8rpx;  
+}  
+.loading{  
+  font-size: 14px;
+  padding: 15px;  
+  text-align: center;  
+}  
+/* .loading:before{  
+  display: inline-block;  
+  margin-right: 5rpx;  
+  vertical-align: middle;  
+  content: '';  
+  width: 40rpx;  
+  height: 40rpx;  
+  background: url(../../images/icon-loading.png) no-repeat;  
+  background-size: contain;  
+  animation: rotate 1s linear infinite;  
+}   */
+.loading.complete:before{  
+  display: none;  
+}  
+
+.img-box{
+  margin-top: 50px;
+  font-size: 14px;
+  color: #999;
+  text-align: center;
+}
+
+.img-box > image {
+  display: block;
+  width: 206px;
+  height: 169px;
+  margin: 0 auto;
+}
+
+.img-box > text {
+  margin-top: 10px;
+}

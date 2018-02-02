@@ -1,0 +1,25 @@
+<view class='line-box'>
+  <view class='line-one'></view>
+  <text class='line-text'>本次停车费用</text>
+  <view class='line-two'></view>
+</view>
+<view>
+  <view class='money'>{{consumedMoney1}}</view>
+  <view class='park_list clearfix'>
+    <view class='park_info'>
+      <view class='park_cont'>{{payTime1}}小时</view>
+      <view class='park_title'>购买时长</view>
+    </view>
+    <view class='park_info'>
+      <view class='park_cont'>{{parkTime1}}分钟</view>
+      <view class='park_title'>停车时间</view>
+    </view>
+    <view class='park_info'>
+      <view class='park_cont'>{{parkNo1}}</view>
+      <view class='park_title'> 车位编号</view>
+    </view>
+  </view>
+  <view class='money_all'>总费用:{{consumedMoney1}}元</view>
+  <view class='money_info'>还需支付<span class="money_remain">￥{{moneyremain}}</span>才能继续停车</view>
+  <view class='share_btn' bindtap='returnOut'>返回</view> 
+</view>

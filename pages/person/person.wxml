@@ -4,36 +4,24 @@
     <view class='user_name'>{{userInfo.nickName}}</view>
     <view class="user_no" bindtap='userNo'>车牌号： <span class="{{user_no==1 ? 'on' : ''}}">{{userNo}}</span></view>
   </view>
-  <image class='arrow' src='../../img/arrow_icon@2x.png'></image>
+  <!-- <image class='arrow' src='../../img/arrow_icon@2x.png'></image> -->
 </view>
 <view class="cont">
-  <view class='balance_box clearfix'>
-    <view class='flt'>
-      <view class='balance'>余额</view>
-      <view class='balance_num'>20.00元</view>
-    </view>
-    <view class='frt top-up'>充值</view>
-  </view>
-   <view class='coupons_box clearfix'>
-    <view class='flt person-title'>优惠券</view>
-    <image class='arrow1' src='../../img/arrow_icon@2x.png'></image>
-    <view class='frt info'>{{coupons}}</view>
-  </view>
-  <view class='parking_box clearfix'>
+
+  <view class='parking_box clearfix' bindtap='parkingList'>
     <view class='flt person-title'>停车记录</view>
     <image class='arrow1' src='../../img/arrow_icon@2x.png'></image>
     <view class='frt info'>{{parkNum}}次</view>
   </view>
-  <view class='recharge_box clearfix'>
-    <view class='flt person-title'>充值记录</view>
-    <image class='arrow1' src='../../img/arrow_icon@2x.png'></image>
-  </view>
-  <view class='refunds_box clearfix'>
+
+  <view class='refunds_box clearfix' bindtap='refundList'>
     <view class='flt person-title'>退款记录</view>
     <image class='arrow1' src='../../img/arrow_icon@2x.png'></image>
   </view>
-  <view class='inform_box clearfix'>
-    <view class='flt person-title'>官方通知</view>
+
+  <!-- <view class='refunds_box clearfix' bindtap='refundList'>
+    <view class='flt person-title'>我的车位</view>
     <image class='arrow1' src='../../img/arrow_icon@2x.png'></image>
-  </view> 
+  </view> -->
+
 </view>

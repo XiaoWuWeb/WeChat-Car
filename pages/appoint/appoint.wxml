@@ -1,0 +1,28 @@
+<view class='wrap'>
+  <view class='line-box'>
+    <view class='line-one'></view>
+    <text class='line-text'>车位编号</text>
+    <view class='line-two'></view>
+  </view>
+  <view class='carNum-box'>
+    <view class='carNum'>{{carNum}}</view>
+
+  </view>
+
+  <view class='info-box'>
+    <view class='address'>{{address}}</view>
+    <view class='plate clearfix' bindtap='plateInfo'>车牌号：<span>{{plate}}</span></view>
+    <view class='time clearfix'>预留时长：<span>30分钟</span></view>
+
+     <view class='money clearfix border-none'>担保费：<span>￥{{money}}</span></view> 
+  </view>
+</view>
+
+<view style='font-size: 16px; line-height: 30px; color: #333; padding: 40rpx 28rpx 0 40rpx;'>温馨提示：</view>
+<view style='font-size: 12px; line-height: 20px; color: #999; padding: 0 28rpx 0 40rpx'>1、预约车位成功后，立即为您保留车位，15分钟内免费取消；</view>
+<view style='font-size: 12px; line-height: 20px; color: #999; padding: 0 28rpx 0 40rpx'>2、30分钟后如未入场支付地锁开启费用，订单会自动取消，并扣除担保费。</view>
+
+<view class='footer clearfix'>
+  <view class='money_all'>合计：￥{{moneyAll}}</view>
+  <view class="pay_btn" bindtap='payMoney'>立即预约</view>
+</view>

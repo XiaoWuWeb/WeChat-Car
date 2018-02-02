@@ -1,14 +1,8 @@
-<!-- <view>
-  <view class='plate_title'>车牌号：</view>
-  <view class='plate_info'>
-    <input type="text" maxlength='8' placeholder="输入车牌号码" bindinput="plateInput"></input>
-  </view>
-  <view class="plate_on {{plateLength? 'on' : ''}}" bindtap='plateOn'>确定</view>
-</view> -->
+
 
 <view animation="{{animationData}}" class="plate-input-box-container center">
       <view class="flex plate-input-box">
-        <block wx:for="{{inputBoxData}}">
+        <block wx:for="{{inputBoxData}}" wx:key="plateInput">
           <view class="plate-input-digit {{item.hover}}" id='{{index}}' bindtap="bindDigitTap">{{item.char}}</view>
         </block>
       </view>
@@ -16,13 +10,13 @@
 
   <block wx:if="{{currentPos!=null}}">
     <view class="flex plate-keyboard-container" wx:if="{{currentPos==0}}">
-      <block wx:for="{{plateAreaCharset}}">
+      <block wx:for="{{plateAreaCharset}}" wx:key="plateArea">
         <view class="plate-keyborad-key" hover-stay-time='100' hover-class="plate-keyborad-key-hover" data-char='{{item}}' bindtap="bindKeyTap">{{item}}</view>
       </block>
     </view>
 
     <view class="flex plate-keyboard-container" wx:else>
-      <block wx:for="{{plateDigitCharset}}">
+      <block wx:for="{{plateDigitCharset}}" wx:key="plateDigit">
         <view class="plate-keyborad-key" hover-stay-time='100' hover-class="plate-keyborad-key-hover" data-char='{{item}}' bindtap="bindKeyTap">{{item}}</view>
       </block>
     </view>

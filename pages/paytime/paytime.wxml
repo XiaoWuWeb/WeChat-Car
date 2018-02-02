@@ -1,5 +1,5 @@
 <view class='title'>收费说明：{{moneyTime}}元/小时</view>
 <view class='info'>时长如未用尽，结算后将折算成优惠券退回到您的账户</view>
-<input class='input-time' type='number' placeholder='请输入时长' bindinput="bindHideKeyboard"></input>
+<input class='input-time' maxlength='3' type='number' placeholder='请输入时长' bindinput="bindHideKeyboard"></input>
 <view class='sum'>合计： ￥{{money}}</view>
 <view class="confirm_btn {{swichNav==1 ? 'setPhone_btn' : ''}}" bindtap='confirmPay'>确认购买</view>

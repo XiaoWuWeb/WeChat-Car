@@ -1,0 +1,4 @@
+<view class='img-box' hidden="{{!imgParking}}">
+  <image src='../../img/Recharge-record_icon@2x.png'></image>
+  <text>暂无帮助文档哦</text>
+</view>

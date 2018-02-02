@@ -2,6 +2,14 @@
   "pages":[
     
     "pages/index/index",
+    "pages/appoint/appoint",
+    "pages/lockMap/lockMap",
+    "pages/lockDetailList/lockDetailList",
+    "pages/lockParkingList/lockParkingList",
+    "pages/lockDetail/lockDetail",
+    
+
+    
     "pages/person/person",
     "pages/carNumber/carNumber",
     "pages/help/help",
@@ -10,7 +18,12 @@
     "pages/paytime/paytime",
     "pages/order/order",
     "pages/endbilling/endbilling",
+    "pages/endbillingtow/endbillingtow",
+    "pages/refund/refund",
+    "pages/parking/parking",
+    
     "pages/plate1/plate1"
+    
   ],
   "window":{
     "backgroundTextStyle":"light",

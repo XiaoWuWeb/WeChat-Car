@@ -1,0 +1,35 @@
+<map id="map" longitude="102.6569366455" latitude="25.0821785206" scale="14" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" bindregionchange="regionchange" show-location class="map">
+
+<!-- <map id="map" scale="12" longitude="{{longitude}}" latitude="{{latitude}}" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindtap="click" bindmarkertap="markertap" bindcallouttap="callouttap" show-location style="width: 100%;height:{{winHeight}}px"> -->
+  <cover-view class='parking-p' bindtap="parkingP">
+    <cover-image src="{{carImg}}"></cover-image>
+    <cover-view>智慧车位</cover-view>
+  </cover-view>  
+  <cover-view class="sweep-btn {{parkShow?'hidden':'show'}}" bindtap="sweepCar">扫码开锁</cover-view>
+</map>
+
+<view class="parking-list-container">
+  <view class="parking-list-section center" wx:for="{{searchSongList}}" wx:key="lcokParking" data-data="{{item}}" data-index="{{item.parking_weiyi_no}}" bindtap="bindParkingListItemTap">
+    <view class="content">
+      <view class="parking-list-item flex">
+        <view class="parking-name">{{item.parking_name}}</view>
+      </view>
+      <view class="parking-list-item flex">
+        <view class="u-1of2 plain-text">距您:
+          <view class="parking-distance">{{item.distance}}</view>
+        </view>
+        <view class="plain-text">剩余车位:
+          <view class="left-number">{{item.type2Count}}</view>
+        </view>
+      </view>
+    </view>
+    <image class="arrow-right" src="../../img/arrow_icon@2x.png"></image>
+    <!--<view class="menu-button">预约</view>-->
+  </view>
+  <view class='img-box' hidden="{{!imgParking}}">
+    <image src='../../img/Recharge-record_icon@2x.png'></image>
+    <text>暂无停车场哦</text>
+  </view>
+</view>
+
+<view class="menu-annotation" bindtap='moreBtn'>查看更多</view>

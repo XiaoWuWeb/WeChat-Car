@@ -1,0 +1,54 @@
+<view class="search">
+  <view class="search-result">
+    <scroll-view scroll-y="true">
+      <!-- <view class="result-item" wx:for="{{searchSongList}}" wx:key="refund" data-data="{{item}}">  
+        <view class="clearfix">
+          <text class="title flt">{{item.explains}}</text>
+          <text class="money frt">{{item.money}}元</text> 
+        </view>
+        <view class="clearfix">
+          <text class="subtitle flt">{{item.times}}</text>
+          <text class="subtitle frt">微信支付</text>
+        </view>
+      </view> -->
+      <view class="parking-list-section center" wx:for="{{searchSongList}}" wx:key="lcokParking" data-data="{{item}}" data-index="{{item.parking_weiyi_no}}" bindtap='lockDetail'>
+        <view class="content">
+          <view class="parking-list-item flex">
+            <view class="parking-name">{{item.parking_name}}</view>
+          </view>
+          <view class="parking-list-item flex">
+            <view class="u-1of2 plain-text">距您:
+              <view class="parking-distance">{{item.distance}}</view>
+            </view>
+            <view class="plain-text">剩余车位:
+              <view class="left-number">{{item.type2Count}}</view>
+            </view>
+          </view>
+        </view>
+        <image class="arrow-right" src="../../img/arrow_icon@2x.png"></image>
+      </view>
+      <!-- <view class="parking-list-section center">
+        <view class="content">
+          <view class="parking-list-item flex">
+            <view class="parking-name">科高路7号停车场</view>
+          </view>
+          <view class="parking-list-item flex">
+            <view class="u-1of2 plain-text">距您:
+              <view class="parking-distance">200米</view>
+            </view>
+            <view class="plain-text">剩余车位:
+              <view class="left-number">43</view>
+            </view>
+          </view>
+        </view>
+        <image class="arrow-right" src="../../img/arrow_icon@2x.png"></image>
+      </view> -->
+      <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view>
+      <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view>
+    </scroll-view>
+    <view class='img-box' hidden="{{!imgParking}}">
+      <image src='../../img/Recharge-record_icon@2x.png'></image>
+      <text>暂无停车场哦</text>
+    </view>
+  </view>
+</view>

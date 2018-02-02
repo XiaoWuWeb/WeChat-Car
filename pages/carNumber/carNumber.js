@@ -1,5 +1,6 @@
-//input.js
+var http = require('../../utils/http.js');
 var app = getApp();
+
 var markerId;
 Page({
   data: {
@@ -14,11 +15,20 @@ Page({
     pay: false,
     focus: false
   },
+  onShareAppMessage: function () {
+    return {
+      title: '华腾智能停车',
+      path: '/pages/index/index',
+    }
+  },
   onLoad: function(){
+    wx.showShareMenu({
+      withShareTicket: true
+    });
     wx.getStorage({
       key: 'markerId',
       success: function (res) {
-        console.log(res.data)
+
         if (res.data) {
           markerId = res.data;
         }
@@ -26,7 +36,7 @@ Page({
     });
   },
   bindHideKeyboard: function (e) {
-    console.log(e.detail.value);
+    
     var vals = e.detail.value;
     var lens = e.detail.value.length;
     this.setData({
@@ -81,69 +91,7 @@ Page({
       // 这里看要不要先验证下车位编号
       var carNumber = this.data.val
       oData.parkingNo = carNumber;
-      console.log(carNumber);
-      // oData.parkNo = 'sztzc10002'
-      // console.log(res.data)
-      // app.func.req('/pkmg/qparkingno', oData, function (res) {
-      //   console.log(res)
-      //   if(res.success){
-          wx.setStorage({
-            key: 'carNumber',
-            data: carNumber,
-            complete: function () {
-              // 跳转
-              console.log(1)
-              wx.navigateTo({
-                url: '../order/order'
-              })
-            }
-          });
-        // }else{
-        //   if(res.code == 400){
-        //     wx.showModal({
-        //       title: '提示',
-        //       content: '您输入的停车场车位编号已经被占用，请重新选择',
-        //       showCancel: false,
-        //       success: function (res) {
-        //         if (res.confirm) {
-        //           console.log('用户点击确定')
-        //         }
-        //       }
-        //     });
-        //   } else if (res.code == 500){
-        //     wx.showModal({
-        //       title: '提示',
-        //       content: '您输入的停车场车位编号有误，请重新输入',
-        //       showCancel: false,
-        //       success: function (res) {
-        //         if (res.confirm) {
-        //           console.log('用户点击确定')
-        //         }
-        //       }
-        //     });
-        //   } else if (res.code == 600) {
-        //     wx.showModal({
-        //       title: '提示',
-        //       content: '您输入编号的车位在维修中，请重新选择车位',
-        //       showCancel: false,
-        //       success: function (res) {
-        //         if (res.confirm) {
-        //           console.log('用户点击确定')
-        //         }
-        //       }
-        //     });
-        //   }
-        // }
-      //});  
-    }
-  },
-  confirmTobtn: function(e){
-    if (this.data.len == 6){
-      var oData = {};
-      var carNumber = this.data.val
-      oData.parkingNo = carNumber;
-      console.log(carNumber);
-      // oData.parkNo = markerId
+
       app.func.req('/pkmg/qparkingno', oData, function (res) {
         if (res.success) {
           wx.setStorage({
@@ -151,47 +99,59 @@ Page({
             data: carNumber,
             complete: function () {
               // 跳转
-              console.log(1)
+
+              wx.navigateTo({
+                url: '../order/order'
+              });
+            }
+          });
+        }else {
+          wx.showModal({
+            title: '提示',
+            content: '您输入的停车场车位编号已经被占用，请重新选择',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              }
+            }
+          });
+        }
+      });
+    }
+  },
+  confirmTobtn: function(e){
+    if (this.data.len == 6){
+      var oData = {};
+      var carNumber = this.data.val
+      oData.parkingNo = carNumber;
+
+      app.func.req('/pkmg/qparkingno', oData, function (res) {
+        if (res.success) {
+          wx.setStorage({
+            key: 'carNumber',
+            data: carNumber,
+            complete: function () {
+              // 跳转
+
               wx.navigateTo({
                 url: '../order/order'
               })
             }
           });
         } else {
-          if (res.code == 400) {
-            wx.showModal({
-              title: '提示',
-              content: '您输入的停车场车位编号已经被占用，请重新选择',
-              showCancel: false,
-              success: function (res) {
-                if (res.confirm) {
-                  console.log('用户点击确定')
-                }
+
+          wx.showModal({
+            title: '提示',
+            content: '您输入的停车场车位编号已经被占用，请重新选择',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
               }
-            });
-          } else if (res.code == 500) {
-            wx.showModal({
-              title: '提示',
-              content: '您输入的停车场车位编号有误，请重新输入',
-              showCancel: false,
-              success: function (res) {
-                if (res.confirm) {
-                  console.log('用户点击确定')
-                }
-              }
-            });
-          } else if (res.code == 600) {
-            wx.showModal({
-              title: '提示',
-              content: '您输入编号的车位在维修中，请重新选择车位',
-              showCancel: false,
-              success: function (res) {
-                if (res.confirm) {
-                  console.log('用户点击确定')
-                }
-              }
-            });
-          }
+            }
+          });
+          
         }
       });  
     }

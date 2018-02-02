@@ -1,10 +1,4 @@
-<!-- <view>
-  <view class='plate_title'>车牌号：</view>
-  <view class='plate_info'>
-    <input type="text" maxlength='8' placeholder="输入车牌号码" bindinput="plateInput"></input>
-  </view>
-  <view class="plate_on {{plateLength? 'on' : ''}}" bindtap='plateOn'>确定</view>
-</view> -->
+
 
 <view animation="{{animationData}}" class="plate-input-box-container center">
       <view class="flex plate-input-box">

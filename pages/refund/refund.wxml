@@ -1,0 +1,22 @@
+<view class="search">
+  <view class="search-result">
+    <scroll-view scroll-y="true" bindscrolltolower="searchScrollLower">
+      <view class="result-item" wx:for="{{searchSongList}}" wx:key="refund" data-data="{{item}}">  
+        <view class="clearfix">
+          <text class="title flt">{{item.explains}}</text>
+          <text class="money frt">{{item.money}}元</text> 
+        </view>
+        <view class="clearfix">
+          <text class="subtitle flt">{{item.times}}</text>
+          <text class="subtitle frt">微信支付</text>
+        </view>
+      </view>
+      <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view>
+      <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view>
+    </scroll-view>
+    <view class='img-box' hidden="{{!imgParking}}">
+      <image src='../../img/Recharge-record_icon@2x.png'></image>
+      <text>暂无退款记录哦</text>
+    </view>
+  </view>
+</view>

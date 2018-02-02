@@ -1,0 +1,35 @@
+<view class="info-list-container">
+  <view class="info-list-item">
+    <image class="info-list-icon" src="../../img/rmb.png"></image>
+    <view class="info-list-content">
+      <view class="info-list-key">价格</view>
+      <view class="info-list-value">{{money}}元/次</view>
+    </view>
+  </view>
+  <view class="info-list-item" bindtap="openLocation">
+    <image class="info-list-icon" src="../../img/mobile_02.png"></image>
+    <view class="info-list-content">
+      <view class="info-list-key">位置</view>
+      <text class="info-list-value">{{address}}</text>
+    </view>
+  </view>
+  <view class="info-list-item">
+    <image class="info-list-icon" src="../../img/lockNo.png"></image>
+    <view class="info-list-content">
+      <view class="info-list-key">车位编号</view>
+      <view class="info-list-value">{{lockNo}}</view>
+    </view>
+  </view>
+</view>
+
+<view class="{{downNav?'show':'hidden'}}" style='text-align: center;'>
+  <image class='lock-img' src="{{lockDownImg}}" bindtap='lockDown'></image>
+  <text class='lock-info'>{{lockDownInfo}}</text>
+</view>
+<view class="{{upNav?'show':'hidden'}}" style='text-align: center;'>
+  <image class='lock-img' src="{{lockUpImg}}" bindtap='lockUp'></image>
+  <text class='lock-info'>{{lockUpInfo}}</text>
+</view>
+
+
+

@@ -1,7 +1,8 @@
-// var rootDocment = 'http://192.168.0.108:8080/PayPay';
-// var rootDocment = 'http://192.168.0.106:9090/PayPay';
+// var rootDocment = 'http://192.168.0.108:9090/PayPay';
+// var rootDocment = 'http://192.168.0.116:8080/PayPay';
+// var rootDocment = 'http://192.168.0.101:8080/PayPay';
 var rootDocment = 'https://www.lcgxlm.com/PayPay';
-// var rootDocment = 'http://192.168.0.100:80/PayPay';
+
 function req(url, data, cb) {
   wx.request({
     url: rootDocment + url,

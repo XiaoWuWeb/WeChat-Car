@@ -9,6 +9,17 @@ Page({
     currentPos: null,
     animationData: {},
   },
+  onShareAppMessage: function () {
+    return {
+      title: '华腾智能停车',
+      path: '/pages/index/index',
+    }
+  },
+  onLoad: function () {
+    wx.showShareMenu({
+      withShareTicket: true
+    });
+  },
   onShow: function () {
     // 页面显示
     var animation = wx.createAnimation({
@@ -19,41 +30,24 @@ Page({
     this.setData({
       animationData: animation.export()
     })
-    // this.putPlateInputBox()
-    // this.query()
+
   },
-  // plateInput:function(e){
-  //   var plateInput = e.detail.value;
-  //   console.log(plateInput.length);
-  //   if (plateInput.length > 6){
-  //     this.setData({
-  //       plateLength: true,
-  //     })
-  //   }else{
-  //     this.setData({
-  //       plateLength: false,
-  //     })
-  //   }
-  //   this.setData({
-  //     plateNo: plateInput,
-  //   })
-  // },
+ 
   bindDigitTap: function (res) {
     let inputBoxData = this.data.inputBoxData
     let id = res.currentTarget.id
     let currentPos = id
-    // console.log(currentPos)
+
     if (currentPos  > 6 ){
       
-      // console.log(this.data.inputBoxData);
-      // console.log(this.data.inputBoxData.char);
+
       var oArr = [];
       for (var i = 0; i < this.data.inputBoxData.length; i++){
         
         
         oArr.push(this.data.inputBoxData[i].char);
       }
-      // console.log(oArr);
+
       var oString = oArr.join("")
       this.setData({
         plateLength: true,
@@ -79,7 +73,7 @@ Page({
 
   },
   bindKeyTap: function (res) {
-    console.log(res)
+
     let char = res.currentTarget.dataset.char
     let inputBoxData = this.data.inputBoxData
     inputBoxData[this.data.currentPos].char = char
@@ -92,20 +86,17 @@ Page({
   },
   plateOn: function(){
     var that = this;
-    // console.log(this.data.plateLength);
-    //console.log(this.data.plateNo);
+
     if (this.data.plateLength){
       wx.setStorage({
         key: 'plateNo',
         data: that.data.plateNo,
         complete: function () {
           //跳转
-          wx.navigateTo({
-            url: '../person/person'
+          wx.redirectTo({
+            url: '../index/index'
           });
-          // wx.navigateBack({
-          //   delta: 1
-          // })
+
         }
       });
     }
